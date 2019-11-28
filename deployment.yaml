@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fitec-deployment
+  labels:
+    app: fitec
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fitec
+  template:
+    metadata:
+      labels:
+        app: fitec
+    spec:
+      containers:
+      - name: my-fitec-app
+        image: my-fitec-app
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fitec-service
+spec:
+  selector:
+    app: fitec
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 9376
